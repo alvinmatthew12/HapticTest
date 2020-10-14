@@ -24,6 +24,12 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
 //        haptic(style: 3)
+        
+        let touch: UITouch! = touches.first! as UITouch
+        
+        let location = touch.location(in: self.view)
+        
+        detectTouch(location: location)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
