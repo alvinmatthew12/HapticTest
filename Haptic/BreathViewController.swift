@@ -105,9 +105,9 @@ class BreathViewController: UIViewController {
                 
                 self.instructionLabel.text = "Exhale"
                 
-                self.haptic(style: 1, timeInterval: 0.1)
+                self.haptic(style: 1, timeInterval: 1)
                 
-                self.pulseAnimation(object: self.circle, timeInterval: 0.5)
+                self.pulseAnimation(object: self.circle, timeInterval: 1)
                 
                 self.exhaleTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
                     
@@ -116,9 +116,11 @@ class BreathViewController: UIViewController {
                     
                     self.breathCount += 1
                     
-                    self.breathSession()
+                    self.instructionLabel.text = ""
                     
-                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.breathSession()
+                    }
                     
                 }
             }
