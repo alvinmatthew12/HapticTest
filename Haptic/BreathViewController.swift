@@ -105,8 +105,7 @@ class BreathViewController: UIViewController {
                 
                 self.instructionLabel.text = "Exhale"
                 
-                self.haptic(style: 1, timeInterval: 1)
-                
+                self.shrinkHaptic()
                 self.shrinkAnimation(object: self.circle, duration: 8)
                 
                 self.exhaleTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
@@ -166,6 +165,21 @@ class BreathViewController: UIViewController {
                 object.transform = .identity
             }, completion: nil)
         
+    }
+    
+    func shrinkHaptic() {
+        self.haptic(style: 3, timeInterval: 0.03)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            self.hapticTimer.invalidate()
+            self.haptic(style: 2, timeInterval: 0.03)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.hapticTimer.invalidate()
+                self.haptic(style: 1, timeInterval: 0.03)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    self.hapticTimer.invalidate()
+                }
+            }
+        }
     }
     
     func haptic(style: Int, timeInterval: TimeInterval) {
