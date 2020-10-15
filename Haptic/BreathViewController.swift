@@ -10,7 +10,7 @@ import UIKit
 class BreathViewController: UIViewController {
     
     @IBOutlet weak var instructionLabel: UILabel!
-    let touchPoint = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 44.0, height: 44.0))
+    let touchPoint = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
     let circle = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0))
     
     var pulseTimer = Timer()
@@ -58,7 +58,13 @@ class BreathViewController: UIViewController {
     func setup() {
         circle.layer.cornerRadius = circle.frame.width / 2
         circle.center = touchPoint.center
-        circle.backgroundColor = UIColor.systemTeal
+        circle.backgroundColor = UIColor.clear
+        
+        circle.layer.borderWidth = 2
+        circle.layer.borderColor = UIColor.red.cgColor
+        
+        touchPoint.layer.cornerRadius = touchPoint.frame.width / 2
+        touchPoint.backgroundColor = UIColor.systemTeal
         
         touchPoint.addSubview(circle)
         
