@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             isFastHaptic = false
             if !isNormalHaptic {
                 isNormalHaptic = true
-                haptic(style: 1, timeInterval: 1)
+                haptic(style: 1, timeInterval: 0.5)
             }
         }
     }
