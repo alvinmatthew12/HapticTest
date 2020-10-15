@@ -15,9 +15,10 @@ class BreathViewController: UIViewController {
     
     var pulseTimer = Timer()
     var hapticTimer = Timer()
-    var inhaleTimer = Timer()
-    var holdTimer = Timer()
-    var exhaleTimer = Timer()
+    var breathTimer = Timer()
+//    var inhaleTimer = Timer()
+//    var holdTimer = Timer()
+//    var exhaleTimer = Timer()
     
     var breathCount = 0
     var isBreathStart = false
@@ -99,7 +100,7 @@ class BreathViewController: UIViewController {
         
         self.instructionLabel.text = "Inhale"
         
-        inhaleTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { (timer) in
+        breathTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { (timer) in
             
             self.instructionLabel.text = "Hold"
             
@@ -107,14 +108,14 @@ class BreathViewController: UIViewController {
             
             self.pulseTimer.invalidate()
             
-            self.holdTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { (timer) in
+            self.breathTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { (timer) in
                 
                 self.instructionLabel.text = "Exhale"
                 
                 self.shrinkHaptic()
                 self.shrinkAnimation(object: self.circle, duration: 8)
                 
-                self.exhaleTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
+                self.breathTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
                     
                     self.hapticTimer.invalidate()
                     self.pulseTimer.invalidate()
@@ -135,9 +136,7 @@ class BreathViewController: UIViewController {
     func stop() {
         pulseTimer.invalidate()
         hapticTimer.invalidate()
-        inhaleTimer.invalidate()
-        holdTimer.invalidate()
-        exhaleTimer.invalidate()
+        breathTimer.invalidate()
         isBreathStart = false
         instructionLabel.text = "Stopped"
     }
@@ -175,13 +174,15 @@ class BreathViewController: UIViewController {
     
     func shrinkHaptic() {
         self.haptic(style: 3, timeInterval: 0.03)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        self.breathTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false) { (timer) in
             self.hapticTimer.invalidate()
             self.haptic(style: 2, timeInterval: 0.03)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            
+            self.breathTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false) { (timer) in
                 self.hapticTimer.invalidate()
                 self.haptic(style: 1, timeInterval: 0.03)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                
+                self.breathTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
                     self.hapticTimer.invalidate()
                 }
             }

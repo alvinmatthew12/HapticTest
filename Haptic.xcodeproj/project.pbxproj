@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1094A18253891C000318EB3 /* SensingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1094A17253891C000318EB3 /* SensingViewController.swift */; };
 		E131ECD12537EA610008CD44 /* BreathViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E131ECD02537EA610008CD44 /* BreathViewController.swift */; };
 		E135F3242537376A004D3411 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135F3232537376A004D3411 /* AppDelegate.swift */; };
 		E135F3262537376A004D3411 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135F3252537376A004D3411 /* SceneDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1094A17253891C000318EB3 /* SensingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensingViewController.swift; sourceTree = "<group>"; };
 		E131ECD02537EA610008CD44 /* BreathViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathViewController.swift; sourceTree = "<group>"; };
 		E135F3202537376A004D3411 /* Haptic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Haptic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E135F3232537376A004D3411 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				E135F3232537376A004D3411 /* AppDelegate.swift */,
 				E135F3252537376A004D3411 /* SceneDelegate.swift */,
 				E131ECD02537EA610008CD44 /* BreathViewController.swift */,
+				E1094A17253891C000318EB3 /* SensingViewController.swift */,
 				E135F3272537376A004D3411 /* ViewController.swift */,
 				E135F3292537376A004D3411 /* Main.storyboard */,
 				E135F32C2537376B004D3411 /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 				E135F3282537376A004D3411 /* ViewController.swift in Sources */,
 				E135F3242537376A004D3411 /* AppDelegate.swift in Sources */,
 				E131ECD12537EA610008CD44 /* BreathViewController.swift in Sources */,
+				E1094A18253891C000318EB3 /* SensingViewController.swift in Sources */,
 				E135F3262537376A004D3411 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
