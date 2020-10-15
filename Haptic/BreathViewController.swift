@@ -89,7 +89,7 @@ class BreathViewController: UIViewController {
         
         haptic(style: 3, timeInterval: 1)
         
-        pulseAnimation(object: circle)
+        pulseGrowAnimation(object: circle)
         
         self.instructionLabel.text = "Inhale"
         
@@ -107,7 +107,7 @@ class BreathViewController: UIViewController {
                 
                 self.haptic(style: 1, timeInterval: 1)
                 
-                self.pulseAnimation(object: self.circle, timeInterval: 1)
+                self.shrinkAnimation(object: self.circle, duration: 8)
                 
                 self.exhaleTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
                     
@@ -137,17 +137,35 @@ class BreathViewController: UIViewController {
         instructionLabel.text = "Stopped"
     }
     
-    func pulseAnimation(object: UIView, timeInterval: TimeInterval = 1) {
+    func pulseGrowAnimation(object: UIView, timeInterval: TimeInterval = 1) {
+        
+        var scaleXValue: CGFloat = 1.0
+        var yValue: CGFloat = 1.0
         
         pulseTimer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { (timer) in
-            object.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            
+            object.transform = CGAffineTransform(scaleX: scaleXValue + 0.9, y: yValue + 0.9)
+            
+            scaleXValue += 0.5
+            yValue += 0.5
             
             UIView.animate(
                 withDuration: 1, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 3,
                 options: .curveEaseOut, animations: {
-                    object.transform = .identity
+                    object.transform = CGAffineTransform(scaleX: scaleXValue, y: yValue)
                 }, completion: nil)
+            
         })
+        
+    }
+    
+    func shrinkAnimation(object: UIView, duration: TimeInterval) {
+        UIView.animate(
+            withDuration: duration, delay: 0,
+            options: .curveEaseOut, animations: {
+                object.transform = .identity
+            }, completion: nil)
+        
     }
     
     func haptic(style: Int, timeInterval: TimeInterval) {
