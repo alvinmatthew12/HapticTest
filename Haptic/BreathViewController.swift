@@ -15,8 +15,12 @@ class BreathViewController: UIViewController {
     
     var pulseTimer = Timer()
     var hapticTimer = Timer()
+    var inhaleTimer = Timer()
+    var holdTimer = Timer()
+    var exhaleTimer = Timer()
     
     var breathCount = 0
+    var isBreathStart = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,8 @@ class BreathViewController: UIViewController {
         let location = touch.location(in: self.view)
         
         touchPoint.center = location
+        
+        isBreathStart = true
         
         breathSession()
         
@@ -46,8 +52,7 @@ class BreathViewController: UIViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        pulseTimer.invalidate()
-        hapticTimer.invalidate()
+        stop()
     }
     
     func setup() {
@@ -64,9 +69,19 @@ class BreathViewController: UIViewController {
     
     func breathSession() {
         
-        if breathCount < 4 {
-            breathFourSevenEight()
+        if isBreathStart {
+            if breathCount < 4 {
+                breathFourSevenEight()
+            } else {
+                self.instructionLabel.text = "Well Done"
+                breathCount = 0
+                return
+            }
+        } else {
+            breathCount = 0
+            return
         }
+        
         
     }
     
@@ -78,7 +93,7 @@ class BreathViewController: UIViewController {
         
         self.instructionLabel.text = "Inhale"
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        inhaleTimer = Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { (timer) in
             
             self.instructionLabel.text = "Hold"
             
@@ -86,7 +101,7 @@ class BreathViewController: UIViewController {
             
             self.pulseTimer.invalidate()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
+            self.holdTimer = Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { (timer) in
                 
                 self.instructionLabel.text = "Exhale"
                 
@@ -94,18 +109,30 @@ class BreathViewController: UIViewController {
                 
                 self.pulseAnimation(object: self.circle, timeInterval: 0.5)
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+                self.exhaleTimer = Timer.scheduledTimer(withTimeInterval: 8, repeats: false) { (timer) in
                     
                     self.hapticTimer.invalidate()
                     self.pulseTimer.invalidate()
                     
                     self.breathCount += 1
+                    
                     self.breathSession()
+                    
                     
                     
                 }
             }
         }
+    }
+    
+    func stop() {
+        pulseTimer.invalidate()
+        hapticTimer.invalidate()
+        inhaleTimer.invalidate()
+        holdTimer.invalidate()
+        exhaleTimer.invalidate()
+        isBreathStart = false
+        instructionLabel.text = "Stopped"
     }
     
     func pulseAnimation(object: UIView, timeInterval: TimeInterval = 1) {
@@ -117,7 +144,7 @@ class BreathViewController: UIViewController {
                 withDuration: 1, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 3,
                 options: .curveEaseOut, animations: {
                     object.transform = .identity
-            }, completion: nil)
+                }, completion: nil)
         })
     }
     
@@ -142,5 +169,5 @@ class BreathViewController: UIViewController {
             impactFeedbackGenerator.impactOccurred()
         }
     }
-
+    
 }
